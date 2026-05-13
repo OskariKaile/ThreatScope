@@ -1,6 +1,6 @@
 // Deployed: point this at your backend host (no trailing slash)
 // Locally:  leave empty — requests go to /api/... on the same origin
-const API = '';
+const API = "https://threatscope-tx9x.onrender.com";
 
 // ---------- helpers ----------
 const $ = sel => document.querySelector(sel);
