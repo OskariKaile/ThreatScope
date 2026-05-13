@@ -2,6 +2,17 @@
 // Locally:  leave empty — requests go to /api/... on the same origin
 const API = "https://threatscope-tx9x.onrender.com";
 
+// ---------- first-load notice ----------
+(function () {
+  const overlay = document.getElementById('notice-overlay');
+  const close = document.getElementById('notice-close');
+  if (!overlay || !close) return;
+  const dismiss = () => overlay.classList.add('hidden');
+  close.addEventListener('click', dismiss);
+  overlay.addEventListener('click', e => { if (e.target === overlay) dismiss(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') dismiss(); });
+})();
+
 // ---------- helpers ----------
 const $ = sel => document.querySelector(sel);
 const flag = cc => cc && cc.length === 2

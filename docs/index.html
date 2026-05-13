@@ -64,6 +64,15 @@
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+<div id="notice-overlay" class="notice-overlay" role="dialog" aria-modal="true" aria-labelledby="notice-title">
+  <div class="notice-modal">
+    <h2 id="notice-title">Heads up</h2>
+    <p>ThreatScope runs on a <strong>free-tier server</strong>, which spins down when idle. The first load may take <strong>30–60 seconds</strong> while the backend wakes up and fetches live data.</p>
+    <p class="notice-sub">Thanks for your patience — the dashboard will populate automatically.</p>
+    <button id="notice-close" type="button">Got it</button>
+  </div>
+</div>
+
 <header class="topbar">
   <div class="brand">
     <img class="brand-mark" src="assets/O-logo.png" alt="Oskari Kaile logo" />
