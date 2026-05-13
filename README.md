@@ -4,7 +4,7 @@
 
 A full-stack cybersecurity threat intelligence dashboard. Track live CVEs from NVD, look up IP reputation via AbuseIPDB, surface active malware campaigns and threat actors from AlienVault OTX, and watch geolocated attack origins on a world map — all in one dark-ops console.
 
-![ThreatScope screenshot](assets/screenshot.png)
+![ThreatScope screenshot](docs\assets\screenshot.png)
 
 > Built by [Oskari Kaile](https://oskarikaile.github.io/)
 
