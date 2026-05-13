@@ -85,4 +85,4 @@ Then open `http://localhost:3000`.
 
 ## License
 
-MIT
+MIT — see [LICENSE](LICENSE) for details.
