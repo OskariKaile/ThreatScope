@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+      <!--
+  ░█████╗░░██╗░░██╗
+  ██╔══██╗░██║░██╔╝
+  ██║░░██║░█████╔╝░
+  ██║░░██║░██╔═██╗░
+  ╚█████╔╝░██║░░██╗
+  ░╚════╝░░╚═╝░░╚═╝
+-->
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="description" content="ThreatScope is a live cybersecurity threat intelligence dashboard by Oskari Kaile — real-time CVE feed, IP reputation lookup (AbuseIPDB), AlienVault OTX threat campaigns, and a geolocated world attack map." />
+<meta name="keywords" content="Oskari Kaile, ThreatScope, threat intelligence, cybersecurity dashboard, CVE feed, AbuseIPDB, AlienVault OTX, NVD, IP lookup, attack map" />
+<meta name="author" content="Oskari Kaile" />
+<meta name="robots" content="index, follow" />
+<title>ThreatScope — Threat Intelligence Dashboard · Oskari Kaile</title>
+
+<meta property="og:title" content="ThreatScope — Threat Intelligence Dashboard · Oskari Kaile" />
+<meta property="og:description" content="Live threat intelligence dashboard — CVE feed, IP reputation, OTX campaigns, and a geolocated world attack map. Built by Oskari Kaile." />
+<meta property="og:url" content="https://oskarikaile.github.io/ThreatScope/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Oskari Kaile" />
+<meta property="og:image" content="https://oskarikaile.github.io/ThreatScope/assets/screenshot.png" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="ThreatScope — Threat Intelligence Dashboard · Oskari Kaile" />
+<meta name="twitter:description" content="Live threat intelligence dashboard — CVE feed, IP reputation, OTX campaigns, and a geolocated world attack map. Built by Oskari Kaile." />
+<meta name="twitter:creator" content="@oskarikaile" />
+<meta name="twitter:image" content="https://oskarikaile.github.io/ThreatScope/assets/screenshot.png" />
+
+<link rel="canonical" href="https://oskarikaile.github.io/ThreatScope/" />
+<link rel="author" href="https://oskarikaile.github.io/" />
+<link rel="icon" type="image/png" href="assets/O.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "ThreatScope — Threat Intelligence Dashboard",
+  "description": "Full-stack cybersecurity threat intelligence dashboard with live CVE feed, IP reputation lookup, OTX campaign tracking, and a geolocated world attack map.",
+  "url": "https://oskarikaile.github.io/ThreatScope/",
+  "applicationCategory": "SecurityApplication",
+  "operatingSystem": "Web",
+  "author": {
+    "@type": "Person",
+    "name": "Oskari Kaile",
+    "url": "https://oskarikaile.github.io/"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Oskari Kaile",
+    "url": "https://oskarikaile.github.io/"
+  }
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <img class="brand-mark" src="assets/O-logo.png" alt="Oskari Kaile logo" />
+    <h1>Threat<span class="accent2">Scope</span></h1>
+    <span class="tag">live threat intelligence</span>
+    <span class="byline">· <a href="https://oskarikaile.github.io/" target="_blank" rel="noopener noreferrer">By Oskari Kaile</a></span>
+  </div>
+  <div class="status"><span class="dot"></span> monitoring</div>
+</header>
+
+<section class="stats" id="stats">
+  <div class="stat"><div class="label">IPs Checked</div><div class="value" id="stat-ips">—</div></div>
+  <div class="stat"><div class="label">Threats Today</div><div class="value accent" id="stat-threats">—</div></div>
+  <div class="stat"><div class="label">CVEs This Week</div><div class="value accent2" id="stat-cves">—</div></div>
+  <div class="stat"><div class="label">Uptime</div><div class="value" id="stat-uptime">—</div></div>
+</section>
+
+<main class="grid">
+
+  <section class="card span-2" id="map-card">
+    <h2>World Attack Map</h2>
+    <div id="map"></div>
+    <div class="legend"><span class="pulse"></span> geolocated threat origin (OTX)</div>
+  </section>
+
+  <section class="card">
+    <h2>IP Lookup</h2>
+    <form id="ip-form">
+      <input id="ip-input" placeholder="8.8.8.8" autocomplete="off" />
+      <button>Scan</button>
+    </form>
+    <div id="ip-result" class="ip-result"></div>
+  </section>
+
+  <section class="card">
+    <h2>Live CVE Feed</h2>
+    <div class="filters">
+      <button data-sev="" class="sev active">All</button>
+      <button data-sev="CRITICAL" class="sev crit">Critical</button>
+      <button data-sev="HIGH" class="sev high">High</button>
+      <button data-sev="MEDIUM" class="sev med">Medium</button>
+      <button data-sev="LOW" class="sev low">Low</button>
+    </div>
+    <ul id="cve-list" class="feed"></ul>
+  </section>
+
+  <section class="card span-2">
+    <h2>Threat Feed — Campaigns & Actors</h2>
+    <ul id="threat-list" class="threat-feed"></ul>
+  </section>
+
+</main>
+
+<footer>
+  ThreatScope · data sources: AbuseIPDB · NVD · AlienVault OTX
+  · Built by <a href="https://oskarikaile.github.io/" target="_blank" rel="noopener noreferrer">Oskari Kaile</a>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
