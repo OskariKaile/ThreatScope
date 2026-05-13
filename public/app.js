@@ -1,6 +1,5 @@
-// When deployed: set this to your Railway backend URL (no trailing slash)
-// e.g. const API = 'https://threatscope-production.up.railway.app';
-// When running locally, leave it empty so calls go to /api/...
+// Deployed: point this at your backend host (no trailing slash)
+// Locally:  leave empty — requests go to /api/... on the same origin
 const API = '';
 
 // ---------- helpers ----------
@@ -8,7 +7,6 @@ const $ = sel => document.querySelector(sel);
 const flag = cc => cc && cc.length === 2
   ? String.fromCodePoint(...[...cc.toUpperCase()].map(c => 127397 + c.charCodeAt(0)))
   : '🌐';
-const fmtDate = d => new Date(d).toLocaleString();
 const fmtRel = d => {
   const s = (Date.now() - new Date(d)) / 1000;
   if (s < 60) return `${s|0}s ago`;
@@ -16,11 +14,12 @@ const fmtRel = d => {
   if (s < 86400) return `${(s/3600)|0}h ago`;
   return `${(s/86400)|0}d ago`;
 };
+const api = path => fetch(API + path).then(r => r.json());
 
 // ---------- Stats bar ----------
 async function loadStats() {
   try {
-    const s = await fetch(`${API}/api/stats').then(r => r.json());
+    const s = await api('/api/stats');
     $('#stat-ips').textContent = s.ipsChecked.toLocaleString();
     $('#stat-threats').textContent = s.threatsFoundToday.toLocaleString();
     $('#stat-cves').textContent = s.cvesThisWeek.toLocaleString();
@@ -38,8 +37,7 @@ $('#ip-form').addEventListener('submit', async e => {
   const box = $('#ip-result');
   box.innerHTML = `<div style="color:var(--muted)">scanning ${ip}…</div>`;
   try {
-    const r = await fetch(`${API}/api/ip/' + encodeURIComponent(ip));
-    const d = await r.json();
+    const d = await api('/api/ip/' + encodeURIComponent(ip));
     if (d.error) { box.innerHTML = `<div style="color:var(--crit)">${d.error}</div>`; return; }
     const scoreColor = d.abuseConfidenceScore >= 75 ? 'var(--crit)'
       : d.abuseConfidenceScore >= 25 ? 'var(--accent)'
@@ -70,7 +68,7 @@ async function loadCves() {
   const ul = $('#cve-list');
   ul.innerHTML = `<li style="color:var(--muted)">loading CVE feed…</li>`;
   try {
-    const list = await fetch(`${API}/api/cves?severity=' + currentSev).then(r => r.json());
+    const list = await api('/api/cves?severity=' + currentSev);
     if (!list.length) { ul.innerHTML = `<li style="color:var(--muted)">no CVEs found</li>`; return; }
     ul.innerHTML = list.map(c => `
       <li>
@@ -107,9 +105,8 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
 
 async function loadThreats() {
   try {
-    const d = await fetch(`${API}/api/threats').then(r => r.json());
+    const d = await api('/api/threats');
 
-    // markers
     (d.markers || []).forEach(m => {
       const icon = L.divIcon({ className: '', html: '<div class="threat-marker"></div>', iconSize: [14,14] });
       L.marker([m.lat, m.lng], { icon }).addTo(map).bindPopup(`
@@ -122,7 +119,6 @@ async function loadThreats() {
       `);
     });
 
-    // feed list
     const ul = $('#threat-list');
     ul.innerHTML = (d.threats || []).map(t => `
       <li>
