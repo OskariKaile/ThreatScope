@@ -109,8 +109,8 @@ document.querySelectorAll('.sev').forEach(btn => {
 const map = L.map('map', { worldCopyJump: true, zoomControl: true })
   .setView([25, 10], 2);
 
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-  attribution: '&copy; OpenStreetMap, &copy; CARTO',
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+  attribution: 'Tiles &copy; Esri &mdash; Esri, HERE, Garmin, &copy; OpenStreetMap contributors',
   maxZoom: 8, minZoom: 2,
 }).addTo(map);
 
