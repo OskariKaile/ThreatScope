@@ -1,8 +1,8 @@
-# ThreatScope — Threat Intelligence Dashboard
+# ThreatScope — Threat Intelligence Dashboard 
 
 **[Live demo →](https://oskarikaile.github.io/ThreatScope/)**
 
-A full-stack cybersecurity threat intelligence dashboard. Track live CVEs from NVD, look up IP reputation via AbuseIPDB, surface active malware campaigns and threat actors from AlienVault OTX, and watch geolocated attack origins on a world map — all in one dark-ops console.
+A full-stack cybersecurity threat intelligence dashboard. Track live CVEs from NVD, look up IP reputation via AbuseIPDB, surface active malware campaigns and threat actors from AlienVault OTX, and watch geolocated attack origins on a world map, all in one dark-ops console.
 
 ![ThreatScope screenshot](docs/assets/screenshot.png)
 
